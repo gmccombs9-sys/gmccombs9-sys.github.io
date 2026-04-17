@@ -36,6 +36,8 @@ align-self: center;}
     padding-bottom: 56.25%; /* 16:9 aspect ratio */
     height: 0;
     overflow: hidden;
+    width: 300px;
+    margin: auto;
 }
 
 .video-wrapper iframe {
