@@ -1,0 +1,32 @@
+body {display: flex; justify-content: center;flex-direction: column;
+    background-color: aqua;
+text-align: center;
+;
+}
+ul {
+    list-style-type: none;
+}
+
+h1{font-size: 100pt;}
+h2{font-size: 50pt;}
+.masterpiece {
+    font-size: 25pt;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    
+}
+#goatslist {
+    background-color: yellow;
+    width: 500px;
+    margin: auto;
+}
+.picture{margin-bottom: 1em;
+    padding: 2em;
+
+border: 3px solid black;width: 300px;
+align-self: center;}
+.right{align-self: flex-end;
+    margin-right: 2em;
+    font-size: 20pt;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+.this{font-size: small; color: purple;}

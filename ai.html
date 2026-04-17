@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>STRONG RPS</title>
+<a href="fromscratch.html">Back to Tennis Goats</a>
+<style>
+  body {
+    font-family: Impact, Arial Black, sans-serif;
+    text-align: center;
+    background: linear-gradient(135deg, black, #1a1a1a);
+    color: gold;
+    padding: 40px;
+  }
+
+  h1 {
+    font-size: 40px;
+    text-shadow: 2px 2px 5px red;
+  }
+
+  .choices button {
+    padding: 15px 25px;
+    margin: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    border: 3px solid gold;
+    border-radius: 12px;
+    background: black;
+    color: gold;
+    font-weight: bold;
+    transition: 0.2s;
+  }
+
+  .choices button:hover {
+    transform: scale(1.15);
+    box-shadow: 0 0 15px gold;
+  }
+
+  .scoreboard {
+    margin-top: 20px;
+    font-size: 26px;
+  }
+
+  .battle {
+    margin-top: 20px;
+    font-size: 40px;
+  }
+
+  .result {
+    margin-top: 20px;
+    font-size: 24px;
+    color: white;
+  }
+
+  .quote {
+    margin-top: 15px;
+    font-size: 20px;
+    color: #00ffcc;
+    font-style: italic;
+  }
+
+  .image-container {
+    margin-top: 25px;
+  }
+
+  .image-container img {
+    width: 250px;
+    border-radius: 15px;
+    border: 3px solid gold;
+    display: none;
+    animation: pop 0.4s ease;
+  }
+
+  @keyframes pop {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .winner {
+    margin-top: 30px;
+    font-size: 30px;
+    color: lime;
+  }
+
+  .reset-btn {
+    margin-top: 20px;
+    padding: 12px 25px;
+    font-size: 18px;
+    display: none;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+  }
+</style>
+</head>
+
+<body>
+
+<h1>💪 STRONG RPS 💪</h1>
+
+<div class="choices">
+  <button onclick="playGame('rock')">🪨 ROCK</button>
+  <button onclick="playGame('paper')">📄 PAPER</button>
+  <button onclick="playGame('scissors')">✂️ SCISSORS</button>
+</div>
+
+<div class="scoreboard">
+  YOU: <span id="playerScore">0</span> |
+  COMPUTER: <span id="computerScore">0</span>
+</div>
+
+<div class="battle" id="battle"></div>
+<div class="result" id="result"></div>
+<div class="quote" id="quote"></div>
+
+<div class="image-container">
+  <img id="winImg" src="https://i.imgur.com/1XK9QZP.png">
+  <img id="loseImg" src="https://i.imgur.com/Z6X9K0p.png">
+</div>
+
+<div class="winner" id="winner"></div>
+
+<button class="reset-btn" onclick="resetGame()" id="resetBtn">PLAY AGAIN</button>
+
+<script>
+let playerScore = 0;
+let computerScore = 0;
+const winningScore = 5;
+
+const emojis = {
+  rock: "🪨",
+  paper: "📄",
+  scissors: "✂️"
+};
+
+// Real Trump quotes (non-political/general tone)
+const winQuotes = [
+  "“I like thinking big. If you're going to be thinking anything, you might as well think big.”",
+  "“Sometimes by losing a battle you find a new way to win the war.”",
+  "“What separates the winners from the losers is how a person reacts to each new twist of fate.”"
+];
+
+const loseQuotes = [
+  "“You have to think anyway, so why not think big?”",
+  "“Without passion, you don’t have energy.”",
+  "“Experience taught me a few things. One is to listen to your gut.”"
+];
+
+const tieQuotes = [
+  "“Deals work best when each side gets something it wants.”",
+  "“Sometimes your best investments are the ones you don’t make.”"
+];
+
+function getComputerChoice() {
+  const choices = ['rock', 'paper', 'scissors'];
+  return choices[Math.floor(Math.random() * 3)];
+}
+
+function random(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function playGame(playerChoice) {
+  if (playerScore >= winningScore || computerScore >= winningScore) return;
+
+  const computerChoice = getComputerChoice();
+
+  document.getElementById('battle').textContent =
+    `${emojis[playerChoice]} VS ${emojis[computerChoice]}`;
+
+  let resultText = "";
+  let quoteText = "";
+
+  // Hide images first
+  document.getElementById('winImg').style.display = "none";
+  document.getElementById('loseImg').style.display = "none";
+
+  if (playerChoice === computerChoice) {
+    resultText = "TIE. Nobody likes ties.";
+    quoteText = random(tieQuotes);
+  }
+  else if (
+    (playerChoice === 'rock' && computerChoice === 'scissors') ||
+    (playerChoice === 'paper' && computerChoice === 'rock') ||
+    (playerChoice === 'scissors' && computerChoice === 'paper')
+  ) {
+    playerScore++;
+    resultText = "💪 HUGE WIN.";
+    quoteText = random(winQuotes);
+    document.getElementById('winImg').style.display = "inline-block";
+  }
+  else {
+    computerScore++;
+    resultText = "❌ VERY SAD.";
+    quoteText = random(loseQuotes);
+    document.getElementById('loseImg').style.display = "inline-block";
+  }
+
+  document.getElementById('playerScore').textContent = playerScore;
+  document.getElementById('computerScore').textContent = computerScore;
+  document.getElementById('result').textContent = resultText;
+  document.getElementById('quote').textContent = quoteText;
+
+  checkWinner();
+}
+
+function checkWinner() {
+  if (playerScore === winningScore) {
+    document.getElementById('winner').textContent =
+      "🏆 YOU ARE THE STRONGEST HUMAN.";
+    document.getElementById('resetBtn').style.display = 'inline-block';
+  }
+  else if (computerScore === winningScore) {
+    document.getElementById('winner').textContent =
+      "💻 COMPUTER WINS. UNBELIEVABLE.";
+    document.getElementById('resetBtn').style.display = 'inline-block';
+  }
+}
+
+function resetGame() {
+  playerScore = 0;
+  computerScore = 0;
+
+  document.getElementById('playerScore').textContent = 0;
+  document.getElementById('computerScore').textContent = 0;
+  document.getElementById('battle').textContent = "";
+  document.getElementById('result').textContent = "";
+  document.getElementById('quote').textContent = "";
+  document.getElementById('winner').textContent = "";
+
+  document.getElementById('winImg').style.display = "none";
+  document.getElementById('loseImg').style.display = "none";
+
+  document.getElementById('resetBtn').style.display = 'none';
+}
+</script>
+
+</body>
+</html>
