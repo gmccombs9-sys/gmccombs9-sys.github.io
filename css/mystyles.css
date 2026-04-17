@@ -33,8 +33,6 @@ align-self: center;}
 
 .video-wrapper {
     position: relative;
-    width: 300px;
-    margin: 0 auto;
     padding-bottom: 56.25%; /* 16:9 aspect ratio */
     height: 0;
     overflow: hidden;
