@@ -31,7 +31,12 @@ align-self: center;}
 }
 .this{font-size: small; color: purple;}
 
-
+.video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+}
 .video-wrapper iframe {
     position: absolute;
     top: 0;
